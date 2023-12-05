@@ -1,7 +1,7 @@
 package main
 
 import (
-	"assalielmehdi/adventofcode2023/util"
+	util_io "assalielmehdi/adventofcode2023/pkg/io"
 	"fmt"
 	"strconv"
 	"unicode"
@@ -52,11 +52,10 @@ func parseNumber(grid [][]byte, i, j int) int {
 
 func solve1() {
 	grid := make([][]byte, 0)
-	lines := util.NewFileIterator("input1.txt")
-	defer lines.Close()
+	lines := util_io.ReadLines("input1.txt")
 
-	for lines.HasNext() {
-		grid = append(grid, []byte(lines.Next()))
+	for _, line := range lines {
+		grid = append(grid, line)
 	}
 
 	sum := int64(0)
@@ -120,11 +119,10 @@ func parseGear(grid [][]byte, i, j int, ratioMemo map[string][]int64) {
 
 func solve2() {
 	grid := make([][]byte, 0)
-	lines := util.NewFileIterator("input1.txt")
-	defer lines.Close()
+	lines := util_io.ReadLines("input1.txt")
 
-	for lines.HasNext() {
-		grid = append(grid, []byte(lines.Next()))
+	for _, line := range lines {
+		grid = append(grid, line)
 	}
 
 	ratioMemo := make(map[string][]int64)

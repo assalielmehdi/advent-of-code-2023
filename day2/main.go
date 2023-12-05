@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"unicode"
 
-	"assalielmehdi/adventofcode2023/util"
+	util_io "assalielmehdi/adventofcode2023/pkg/io"
 )
 
 func parseInt(str string, i int) (int, int) {
@@ -111,14 +111,11 @@ func minPower(game [][]int) int {
 }
 
 func main() {
-	lines := util.NewFileIterator("sample1.txt")
-	defer lines.Close()
-
+	lines := util_io.ReadLines("input1.txt")
 	sum := 0
 
-	for lines.HasNext() {
-		line := lines.Next()
-		game := parseGame(line)
+	for _, line := range lines {
+		game := parseGame(string(line))
 
 		sum += minPower(game)
 	}
