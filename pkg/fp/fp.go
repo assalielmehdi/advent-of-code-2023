@@ -1,5 +1,10 @@
 package util_fp
 
+type Pair[T, U any] struct {
+	First  T
+	Second U
+}
+
 func ForEach[T any](values []T, consumeFunc func(int, T)) {
 	for i, value := range values {
 		consumeFunc(i, value)
@@ -36,4 +41,18 @@ func Reduce[T, R any](values []T, reduceFunc func(R, T) R, initialVal R) R {
 	}
 
 	return reduced
+}
+
+func Zip[T, U any](values1 []T, values2 []U) []*Pair[T, U] {
+	minLen := min(len(values1), len(values2))
+	zipped := make([]*Pair[T, U], minLen)
+
+	for i := 0; i < minLen; i++ {
+		zipped[i] = &Pair[T, U]{
+			First:  values1[i],
+			Second: values2[i],
+		}
+	}
+
+	return zipped
 }

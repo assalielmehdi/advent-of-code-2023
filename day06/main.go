@@ -37,11 +37,13 @@ func main() {
 	scanner.Next() // Distance:
 	distances := util_fp.Map(scanner.NextInts(), func(val int) float64 { return float64(val) })
 
-	answer := int64(1)
-
-	for i := range times {
-		answer *= solveRace(times[i], distances[i])
-	}
+	answer := util_fp.Reduce(
+		util_fp.Zip(times, distances),
+		func(answer int64, race *util_fp.Pair[float64, float64]) int64 {
+			return answer * solveRace(race.First, race.Second)
+		},
+		int64(1),
+	)
 
 	fmt.Println(answer)
 }
