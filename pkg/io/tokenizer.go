@@ -1,9 +1,5 @@
 package util_io
 
-import (
-	"errors"
-)
-
 type Tokenizer struct {
 	content []byte
 	cursor  int
@@ -27,11 +23,11 @@ func (tkzr *Tokenizer) HasNext() bool {
 	return tkzr.cursor < len(tkzr.content)
 }
 
-func (tkzr *Tokenizer) Next() ([]byte, error) {
+func (tkzr *Tokenizer) Next() []byte {
 	tkzr.moveToNext()
 
 	if !tkzr.HasNext() {
-		return nil, errors.New("no more token")
+		return nil
 	}
 
 	token := make([]byte, 0)
@@ -41,5 +37,5 @@ func (tkzr *Tokenizer) Next() ([]byte, error) {
 		tkzr.cursor++
 	}
 
-	return token, nil
+	return token
 }

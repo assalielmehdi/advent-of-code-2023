@@ -18,11 +18,8 @@ func parseCard(str []byte) (*util_ds.Set[int], *util_ds.Set[int]) {
 	winning, guess := util_ds.NewSet[int](), util_ds.NewSet[int]()
 	current := winning
 
-	for {
-		token, err := tokzr.Next()
-		if err != nil {
-			break
-		}
+	for tokzr.HasNext() {
+		token := tokzr.Next()
 
 		val, err := strconv.Atoi(string(token))
 		if err == nil {
