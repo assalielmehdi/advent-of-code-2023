@@ -15,6 +15,16 @@ func NewScanner(content []byte) *Scanner {
 	}
 }
 
+func NewEmptyScanner() *Scanner {
+	return &Scanner{
+		tokenizer: NewEmptyTokenizer(),
+	}
+}
+
+func (scanner *Scanner) SetContent(content []byte) {
+	scanner.tokenizer.SetContent(content)
+}
+
 func (scanner *Scanner) HasNext() bool {
 	return scanner.tokenizer.HasNext()
 }

@@ -1,10 +1,11 @@
 package main
 
 import (
-	util_fp "assalielmehdi/adventofcode2023/pkg/fp"
-	util_io "assalielmehdi/adventofcode2023/pkg/io"
 	"fmt"
 	"math"
+
+	util_fp "assalielmehdi/adventofcode2023/pkg/fp"
+	util_io "assalielmehdi/adventofcode2023/pkg/io"
 )
 
 func solveRace(time, distance float64) int64 {

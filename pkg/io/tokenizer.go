@@ -12,6 +12,18 @@ func NewTokenizer(content []byte) *Tokenizer {
 	}
 }
 
+func NewEmptyTokenizer() *Tokenizer {
+	return &Tokenizer{
+		content: nil,
+		cursor:  0,
+	}
+}
+
+func (tkzr *Tokenizer) SetContent(content []byte) {
+	tkzr.content = content
+	tkzr.cursor = 0
+}
+
 func (tkzr *Tokenizer) moveToNext() {
 	for tkzr.cursor < len(tkzr.content) && tkzr.content[tkzr.cursor] == ' ' {
 		tkzr.cursor++
