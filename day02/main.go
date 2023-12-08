@@ -1,11 +1,9 @@
 package main
 
 import (
-	"fmt"
+	"assalielmehdi/adventofcode2023/util"
 	"strconv"
 	"unicode"
-
-	util_io "assalielmehdi/adventofcode2023/pkg/io"
 )
 
 func parseInt(str string, i int) (int, int) {
@@ -110,15 +108,36 @@ func minPower(game [][]int) int {
 	return maxRed * maxGreen * maxBlue
 }
 
-func main() {
-	lines := util_io.ReadLines("input1.txt")
+func solve1(sc *util.Scanner) any {
+	sum := 0
+	i := 1
+
+	for sc.HasNextLine() {
+		game := parseGame(sc.NextLine())
+
+		if isGamePossible(12, 13, 14, game) {
+			sum += i
+		}
+
+		i++
+	}
+
+	return sum
+}
+
+func solve2(sc *util.Scanner) any {
 	sum := 0
 
-	for _, line := range lines {
-		game := parseGame(string(line))
+	for sc.HasNextLine() {
+		game := parseGame(sc.NextLine())
 
 		sum += minPower(game)
 	}
 
-	fmt.Println(sum)
+	return sum
+}
+
+func main() {
+	util.RunAll("Day 2 - Part 1", solve1)
+	util.RunAll("Day 2 - Part 2", solve2)
 }

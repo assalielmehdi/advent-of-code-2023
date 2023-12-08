@@ -1,7 +1,7 @@
 package main
 
 import (
-	util_io "assalielmehdi/adventofcode2023/pkg/io"
+	"assalielmehdi/adventofcode2023/util"
 	"fmt"
 	"strconv"
 	"unicode"
@@ -50,12 +50,11 @@ func parseNumber(grid [][]byte, i, j int) int {
 	return value
 }
 
-func solve1() {
+func solve1(sc *util.Scanner) any {
 	grid := make([][]byte, 0)
-	lines := util_io.ReadLines("input1.txt")
 
-	for _, line := range lines {
-		grid = append(grid, line)
+	for sc.HasNextLine() {
+		grid = append(grid, sc.NextLineBytes())
 	}
 
 	sum := int64(0)
@@ -66,7 +65,7 @@ func solve1() {
 		}
 	}
 
-	fmt.Println(sum)
+	return sum
 }
 
 func parseNearGears(grid [][]byte, i, j int) [][]int {
@@ -117,12 +116,11 @@ func parseGear(grid [][]byte, i, j int, ratioMemo map[string][]int64) {
 	}
 }
 
-func solve2() {
+func solve2(sc *util.Scanner) any {
 	grid := make([][]byte, 0)
-	lines := util_io.ReadLines("input1.txt")
 
-	for _, line := range lines {
-		grid = append(grid, line)
+	for sc.HasNextLine() {
+		grid = append(grid, sc.NextLineBytes())
 	}
 
 	ratioMemo := make(map[string][]int64)
@@ -147,10 +145,10 @@ func solve2() {
 		}
 	}
 
-	fmt.Println(sum)
+	return sum
 }
 
 func main() {
-	solve1()
-	solve2()
+	util.RunAll("Day 3 - Part 1", solve1)
+	util.RunAll("Day 3 - Part 2", solve2)
 }

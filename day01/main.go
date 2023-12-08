@@ -1,10 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"unicode"
 
-	util_io "assalielmehdi/adventofcode2023/pkg/io"
+	"assalielmehdi/adventofcode2023/util"
 )
 
 func compareSubstr(str string, i int, substr string) bool {
@@ -59,14 +58,16 @@ func calculateCalibration(line string) int {
 	return firstDig*10 + lastDig
 }
 
-func main() {
-	lines := util_io.ReadLines("input2.txt")
-
+func solve(sc *util.Scanner) any {
 	sum := 0
 
-	for _, line := range lines {
-		sum += calculateCalibration(string(line))
+	for sc.HasNextLine() {
+		sum += calculateCalibration(sc.NextLine())
 	}
 
-	fmt.Println(sum)
+	return sum
+}
+
+func main() {
+	util.RunAll("Day 1", solve)
 }

@@ -1,25 +1,22 @@
 package main
 
 import (
-	util_ds "assalielmehdi/adventofcode2023/pkg/ds"
-	util_fp "assalielmehdi/adventofcode2023/pkg/fp"
-	util_io "assalielmehdi/adventofcode2023/pkg/io"
-	util_map "assalielmehdi/adventofcode2023/pkg/map"
-	"fmt"
 	"strconv"
+
+	"assalielmehdi/adventofcode2023/util"
 )
 
-func parseCard(str []byte) (*util_ds.Set[int], *util_ds.Set[int]) {
-	tokzr := util_io.NewTokenizer(str)
+func parseCard(str []byte) (*util.Set[int], *util.Set[int]) {
+	sc := util.NewScanner(str)
 
-	tokzr.Next() // Card
-	tokzr.Next() // XX:
+	sc.Next() // Card
+	sc.Next() // XX:
 
-	winning, guess := util_ds.NewSet[int](), util_ds.NewSet[int]()
+	winning, guess := util.NewSet[int](), util.NewSet[int]()
 	current := winning
 
-	for tokzr.HasNext() {
-		token := tokzr.Next()
+	for sc.HasNext() {
+		token := sc.Next()
 
 		val, err := strconv.Atoi(string(token))
 		if err == nil {
@@ -41,20 +38,18 @@ func scratchCard(str []byte) int {
 	return guess.Size()
 }
 
-func solve1() {
-	lines := util_io.ReadLines("input1.txt")
-
+func solve1(sc *util.Scanner) any {
 	sum := 0
 
-	for _, line := range lines {
-		count := scratchCard(line)
+	for sc.HasNextLine() {
+		count := scratchCard(sc.NextLineBytes())
 
 		if count >= 1 {
 			sum += 1 << (count - 1)
 		}
 	}
 
-	fmt.Println(sum)
+	return sum
 }
 
 func dp(cards []int, i int, memo map[int]int) int {
@@ -71,17 +66,23 @@ func dp(cards []int, i int, memo map[int]int) int {
 	return memo[i]
 }
 
-func solve2() {
-	lines := util_io.ReadLines("input1.txt")
-	cards := util_fp.Map(lines, func(line []byte) int { return scratchCard(line) })
+func solve2(sc *util.Scanner) any {
+	cards := make([]int, 0)
 	memo := make(map[int]int)
 
-	util_fp.ForEach(cards, func(i, card int) { dp(cards, i, memo) })
+	for sc.HasNextLine() {
+		cards = append(cards, scratchCard(sc.NextLineBytes()))
+	}
 
-	fmt.Println(util_map.Sum(memo))
+	sum := 0
+	for i := range cards {
+		sum += dp(cards, i, memo)
+	}
+
+	return sum
 }
 
 func main() {
-	solve1()
-	solve2()
+	util.RunAll("Day 4 - Part 1", solve1)
+	util.RunAll("Day 4 - Part 2", solve2)
 }

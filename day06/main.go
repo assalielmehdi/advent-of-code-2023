@@ -1,11 +1,11 @@
 package main
 
 import (
-	"fmt"
 	"math"
+	"strconv"
+	"strings"
 
-	util_fp "assalielmehdi/adventofcode2023/pkg/fp"
-	util_io "assalielmehdi/adventofcode2023/pkg/io"
+	"assalielmehdi/adventofcode2023/util"
 )
 
 func solveRace(time, distance float64) int64 {
@@ -27,24 +27,32 @@ func solveRace(time, distance float64) int64 {
 	return int64(t2 - t1 + 1)
 }
 
+func solve(sc *util.Scanner) any {
+	sc.Next() // Time:
+	timesStr := strings.Fields(sc.NextLine())
+	times := make([]float64, 0, len(timesStr))
+	for _, timeStr := range timesStr {
+		time, _ := strconv.Atoi(timeStr)
+		times = append(times, float64(time))
+	}
+
+	sc.Next() // Distance:
+	distancesStr := strings.Fields(sc.NextLine())
+	distances := make([]float64, 0, len(distancesStr))
+	for _, distanceStr := range distancesStr {
+		distance, _ := strconv.Atoi(distanceStr)
+		distances = append(distances, float64(distance))
+	}
+
+	answer := int64(1)
+
+	for i := range times {
+		answer *= solveRace(times[i], distances[i])
+	}
+
+	return answer
+}
+
 func main() {
-	lines := util_io.ReadLines("input2.txt")
-
-	scanner := util_io.NewScanner(lines[0])
-	scanner.Next() // Time:
-	times := util_fp.Map(scanner.NextInts(), func(val int) float64 { return float64(val) })
-
-	scanner = util_io.NewScanner(lines[1])
-	scanner.Next() // Distance:
-	distances := util_fp.Map(scanner.NextInts(), func(val int) float64 { return float64(val) })
-
-	answer := util_fp.Reduce(
-		util_fp.Zip(times, distances),
-		func(answer int64, race *util_fp.Pair[float64, float64]) int64 {
-			return answer * solveRace(race.First, race.Second)
-		},
-		int64(1),
-	)
-
-	fmt.Println(answer)
+	util.RunAll("Day 6", solve)
 }
