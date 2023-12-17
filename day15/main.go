@@ -1,10 +1,11 @@
 package main
 
 import (
-	"assalielmehdi/adventofcode2023/util"
 	"slices"
 	"strconv"
 	"strings"
+
+	"assalielmehdi/adventofcode2023/util"
 )
 
 type lens struct {
